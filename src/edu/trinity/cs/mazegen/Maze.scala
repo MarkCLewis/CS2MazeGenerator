@@ -79,13 +79,10 @@ object Maze {
     while (count < numRows * numCols - 1) {
       val index = util.Random.nextInt(adjacent.length)
       val square @ (srow, scol) = adjacent(index)
-      println(s"Pulled $square from index $index")
       adjacent(index) = adjacent.last
       adjacent.trimEnd(1)
-      println(adjacent)
       val nindex = util.Random.nextInt(neighbors(square).length)
       val (nrow, ncol) = neighbors(square)(nindex)
-      println(s"Neighbor is $nrow, $ncol")
 
       // Remove wall
       (ncol - scol, nrow - srow) match {
@@ -107,7 +104,6 @@ object Maze {
             adjacent += crow -> ccol
             neighbors(crow -> ccol) = List(srow -> scol)
           }
-          println(s"Adding $crow, $ccol with neighbor $srow, $scol")
         }
       }
 
@@ -150,12 +146,11 @@ object Maze {
         }
       }
     }
-    walls.foreach(r => println(r.mkString))
     new Maze(cellSize, wrap, walls)
   }
 
   def main(args: Array[String]): Unit = {
-    val maze = Maze(3, true, 10, 10, 0.9)
+    val maze = Maze(3, true, 20, 20, 0.6)
     for (r <- -5 until maze.height + 5) {
       for (c <- -5 until maze.width + 5) {
         if (maze(r, c)) print('#') else print(' ')
