@@ -20,6 +20,14 @@ class Maze(val cellSize: Int, val wrap: Boolean, wallsInput: Array[Array[Int]]) 
 
   def apply(row: Int, col: Int): Boolean = !open(row, col)
 
+  def isClear(cx: Double, cy: Double, width: Double, height: Double): Boolean = {
+    val sx = (cx-width/2).toInt
+    val sy = (cy-height/2).toInt
+    val ex = (cx+width/2).toInt
+    val ey = (cy+height/2).toInt
+    (sx to ex).forall(x => (sy to ey).forall(y => open(x, y))) 
+  }
+
   def open(row: Int, col: Int): Boolean = {
     import Maze._
     val fracRow = (row + height) % cellSize
